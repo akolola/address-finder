@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.fotonotix'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation files('/mnt/c/Projects/Fotonotix/jpostal/build/libs/jpostal.jar')
+}
+
+application {
+    mainClass = 'org.fotonotix.Main'
+}
+
+run {
+    jvmArgs = ["-Djava.library.path=/mnt/c/Projects/Fotonotix/jpostal/build/libs/jpostal/shared"]
+}
