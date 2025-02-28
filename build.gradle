@@ -12,7 +12,7 @@ repositories {
 
 
 application {
-    mainClass = 'org.fotonotix.Main'
+    mainClass = 'org.fotonotix.Demo'
 }
 
 run {
