@@ -10,9 +10,6 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation files('/mnt/c/Projects/Fotonotix/jpostal/build/libs/jpostal.jar')
-}
 
 application {
     mainClass = 'org.fotonotix.Main'
@@ -20,4 +17,22 @@ application {
 
 run {
     jvmArgs = ["-Djava.library.path=/mnt/c/Projects/Fotonotix/jpostal/build/libs/jpostal/shared"]
+}
+
+
+// Get the operating system
+def os = System.getProperty('os.name').toLowerCase()
+
+// Define path for Windows
+def windowsPath = 'C:/Projects/Fotonotix/jpostal/build/libs'
+
+// Define path for Unix (WSL)
+def unixPath = '/mnt/c/Projects/Fotonotix/jpostal/build/libs'
+
+dependencies {
+    if (os.contains('win')) {
+        implementation fileTree(dir: windowsPath, include: ['*.jar'])
+    } else {
+        implementation fileTree(dir: unixPath, include: ['*.jar'])
+    }
 }
