@@ -1,33 +1,42 @@
 package org.fotonotix;
 
+import java.io.*;
+import java.nio.file.*;
 import java.util.List;
 import java.util.Map;
 
 public class Demo {
+    private static final String INPUT_FILE = "input.txt";
+    private static final String OUTPUT_FILE = "output.txt";
+
     public static void main(String[] args) {
         AddressParserService parserService = new AddressParserService();
 
-        // Example texts with embedded addresses
-        String[] examples = {
-                "Company X is located at 1 Infinite Loop, Cupertino, CA 95014, USA. It is a major tech company.",
-                "The White House is located at 1600 Pennsylvania Avenue NW, Washington, DC 20500, USA.",
-                "My office address is 123 Tech Park, Silicon Valley, CA 94043, USA.",
-                "Champ de Mars, 5 Avenue Anatole, Paris, France is a famous landmark.",
-                "The Great Wall of China can be found at Huairou District, Beijing, China.",
-                "The Book Club 100-106 Leonard St, Shoreditch, London, Greater London, EC2A 4RH, United Kingdom."
-        };
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(INPUT_FILE));
+            StringBuilder output = new StringBuilder();
 
-        for (String text : examples) {
-            System.out.println("\nParsing Address Components from: " + text);
-            List<Map<String, String>> parsedAddresses = parserService.extractAndParseAddresses(text);
+            for (String line : lines) {
+                output.append("Original: ").append(line).append("\n");
 
-            if (parsedAddresses.isEmpty()) {
-                System.out.println("No valid address found in text.");
-            } else {
-                for (Map<String, String> address : parsedAddresses) {
-                    address.forEach((key, value) -> System.out.println(key + ": " + value));
+                List<Map<String, String>> parsedAddresses = parserService.extractAndParseAddresses(line);
+
+                if (parsedAddresses.isEmpty()) {
+                    output.append("No valid address found.\n");
+                } else {
+                    for (Map<String, String> address : parsedAddresses) {
+                        address.forEach((key, value) -> output.append(key).append(": ").append(value).append("\n"));
+                    }
                 }
+                output.append("\n"); // Separate results with a blank line
             }
+
+            // Write results to output.txt
+            Files.write(Paths.get(OUTPUT_FILE), output.toString().getBytes());
+            System.out.println("Results written to " + OUTPUT_FILE);
+
+        } catch (IOException e) {
+            System.err.println("Error reading or writing files: " + e.getMessage());
         }
     }
 }

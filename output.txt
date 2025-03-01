@@ -1,0 +1,29 @@
+Original: Company X is located at 1 Infinite Loop, Cupertino, CA 95014, USA.
+house_number: 1
+road: infinite loop
+city: cupertino
+state: ca
+postcode: 95014
+country: usa
+
+Original: The White House is at 1600 Pennsylvania Avenue NW, Washington, DC 20500, USA.
+house_number: 1600
+road: pennsylvania avenue nw
+city: washington
+state: dc
+postcode: 20500
+country: usa
+
+Original: Visit us at 221B Baker Street, London, England.
+No valid address found.
+
+Original: This is not an address, just some random text.
+No valid address found.
+
+Original: The Eiffel Tower is at Champ de Mars, 5 Avenue Anatole, Paris, France.
+house: the eiffel tower is at champ de mars
+house_number: 5
+road: avenue anatole
+city: paris
+country: france
+
