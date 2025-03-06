@@ -17,21 +17,25 @@ public class Demo {
             StringBuilder output = new StringBuilder();
 
             for (String line : lines) {
+                System.out.println("Original: " + line);
                 output.append("Original: ").append(line).append("\n");
 
-                List<Map<String, String>> parsedAddresses = parserService.extractAndParseAddresses(line);
+                Map<String, String> parsedAddress = parserService.parseAddress(line);
 
-                if (parsedAddresses.isEmpty()) {
+                if (parsedAddress.isEmpty()) {
+                    System.out.println("No valid address found.");
                     output.append("No valid address found.\n");
                 } else {
-                    for (Map<String, String> address : parsedAddresses) {
-                        address.forEach((key, value) -> output.append(key).append(": ").append(value).append("\n"));
+                    for (Map.Entry<String, String> entry : parsedAddress.entrySet()) {
+                        String formattedLine = entry.getKey() + ": " + entry.getValue();
+                        System.out.println(formattedLine);
+                        output.append(formattedLine).append("\n");
                     }
                 }
-                output.append("\n"); // Separate results with a blank line
+                System.out.println(); // Blank line in console
+                output.append("\n"); // Blank line in output file
             }
 
-            // Write results to output.txt
             Files.write(Paths.get(OUTPUT_FILE), output.toString().getBytes());
             System.out.println("Results written to " + OUTPUT_FILE);
 
